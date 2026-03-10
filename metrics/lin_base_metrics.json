@@ -1,0 +1,7 @@
+{
+  "accuracy": 0.5098039215686274,
+  "auc": 0.4703947368421053,
+  "f1": 0.32432432432432434,
+  "model_type": "Logistic Regression",
+  "features": 25
+}

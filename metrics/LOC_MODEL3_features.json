@@ -1,0 +1,15 @@
+{
+  "features": [
+    "btc__lag_1",
+    "btc__lag_2",
+    "btc__lag_3",
+    "btc__lag_4",
+    "btc__lag_5",
+    "btc__lag_6",
+    "macro__RSXFS__lag1",
+    "more__ADXR_14__lag6",
+    "more__SAR__lag6",
+    "more__AD__lag4"
+  ],
+  "count": 10
+}

@@ -1,0 +1,7 @@
+{
+  "accuracy": 0.6274509803921569,
+  "auc": 0.5320723684210527,
+  "f1": 0.7532467532467533,
+  "model_type": "Logistic Regression (BTC + Macro + More)",
+  "features": 19
+}

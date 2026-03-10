@@ -1,0 +1,89 @@
+{
+  "timestamp": "2026-03-09T22:40:40.224879",
+  "models": {
+    "xgb_base": {
+      "accuracy": 0.5294117647058824,
+      "auc": 0.5296052631578947,
+      "f1": 0.42857142857142855,
+      "model_type": "XGBoost",
+      "features": 6
+    },
+    "xgb_model1": {
+      "accuracy": 0.6078431372549019,
+      "auc": 0.5822368421052632,
+      "f1": 0.3333333333333333,
+      "model_type": "XGBoost (Macro)",
+      "features": 12
+    },
+    "xgb_model2": {
+      "accuracy": 0.5294117647058824,
+      "auc": 0.46052631578947373,
+      "f1": 0.29411764705882354,
+      "model_type": "XGBoost (BTC + Macro + More)",
+      "features": 15
+    },
+    "xgb_model3": {
+      "accuracy": 0.5294117647058824,
+      "auc": 0.46052631578947373,
+      "f1": 0.29411764705882354,
+      "model_type": "XGBoost (BTC + Macro + More + Sentiment)",
+      "features": 15
+    },
+    "rf_base": {
+      "accuracy": 0.549,
+      "auc": 0.5551,
+      "f1": 0.4889,
+      "model_type": "Random Forest",
+      "features": 6
+    },
+    "rf_model1": {
+      "accuracy": 0.5686,
+      "auc": 0.6349,
+      "f1": 0.6071,
+      "model_type": "Random Forest (Macro)",
+      "features": 4
+    },
+    "rf_model2": {
+      "accuracy": 0.6667,
+      "auc": 0.7023,
+      "f1": 0.6531,
+      "model_type": "Random Forest (BTC + Macro + More)",
+      "features": 22
+    },
+    "rf_model3": {
+      "accuracy": 0.4902,
+      "auc": 0.6299,
+      "f1": 0.3809,
+      "model_type": "Random Forest (BTC + Macro + More + Sentiment)",
+      "features": 43
+    },
+    "LOC_BASE": {
+      "accuracy": 0.5098039215686274,
+      "auc": 0.4703947368421053,
+      "f1": 0.32432432432432434,
+      "model_type": "Logistic Regression",
+      "features": 25
+    },
+    "LOC_MODEL1": {
+      "accuracy": 0.37254901960784315,
+      "auc": 0.446546052631579,
+      "f1": 0.23809523809523808,
+      "model_type": "Logistic Regression (Macro)",
+      "features": 3
+    },
+    "LOC_MODEL2": {
+      "accuracy": 0.6274509803921569,
+      "auc": 0.5320723684210527,
+      "f1": 0.7532467532467533,
+      "model_type": "Logistic Regression (BTC + Macro + More)",
+      "features": 19
+    },
+    "LOC_MODEL3": {
+      "accuracy": 0.39215686274509803,
+      "auc": 0.515625,
+      "f1": 0.06060606060606061,
+      "model_type": "Logistic Regression (BTC + Macro + More + Sentiment)",
+      "features": 10
+    }
+  }
+}

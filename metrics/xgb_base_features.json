@@ -1,0 +1,11 @@
+{
+  "features": [
+    "BTC_lag_1",
+    "BTC_lag_2",
+    "BTC_lag_3",
+    "BTC_lag_4",
+    "BTC_lag_5",
+    "BTC_lag_6"
+  ],
+  "count": 6
+}

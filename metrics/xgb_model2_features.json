@@ -1,0 +1,20 @@
+{
+  "features": [
+    "BTC_lag_1",
+    "BTC_lag_2",
+    "BTC_lag_3",
+    "BTC_lag_4",
+    "BTC_lag_5",
+    "BTC_lag_6",
+    "macro__PPIACO__lag3",
+    "macro__UNRATE__lag2",
+    "macro__RSXFS__lag1",
+    "macro__WALCL__lag5",
+    "more__close_bitcoin_ohlcv__lag4",
+    "more__ADX_14__lag6",
+    "more__ULTOSC__lag4",
+    "more__BBANDS_upper_14__lag4",
+    "more__EMA_8__lag4"
+  ],
+  "count": 15
+}

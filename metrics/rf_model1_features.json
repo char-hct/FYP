@@ -1,0 +1,10 @@
+{
+  "features": [
+    "macro__HOUST__lag2",
+    "macro__INDPRO__lag4",
+    "macro__PPIACO__lag3",
+    "macro__PPIACO__lag4",
+    "macro__RSXFS__lag1"
+  ],
+  "count": 5
+}

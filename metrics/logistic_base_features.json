@@ -1,0 +1,30 @@
+{
+  "features": [
+    "btc__lag_1",
+    "btc__lag_2",
+    "btc__lag_3",
+    "btc__lag_4",
+    "btc__lag_5",
+    "btc__lag_6",
+    "macro__PPIACO__lag3",
+    "macro__UNRATE__lag2",
+    "macro__RSXFS__lag1",
+    "macro__WALCL__lag5",
+    "more__close_bitcoin_ohlcv__lag4",
+    "more__ADX_14__lag6",
+    "more__ADXR_14__lag6",
+    "more__ULTOSC__lag4",
+    "more__BBANDS_upper_14__lag4",
+    "more__EMA_8__lag4",
+    "more__EMA_21__lag4",
+    "more__HT_TRENDLINE__lag4",
+    "more__MA_50__lag4",
+    "more__SAR__lag6",
+    "more__SMA_21__lag4",
+    "more__SMA_50__lag4",
+    "more__TRIMA_30__lag4",
+    "more__WMA_50__lag4",
+    "more__AD__lag4"
+  ],
+  "count": 25
+}

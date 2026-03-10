@@ -1,0 +1,9 @@
+{
+  "accuracy": 0.5686274509803921,
+  "auc": 0.587171052631579,
+  "f1": 0.5925925925925926,
+  "model_type": "Random Forest (Macro)",
+  "features": 5,
+  "precision": 0.7272727272727273,
+  "recall": 0.5
+}

@@ -1,0 +1,8 @@
+{
+  "features": [
+    "macro__RSXFS__lag1",
+    "macro__UNRATE__lag2",
+    "macro__WALCL__lag5"
+  ],
+  "count": 3
+}

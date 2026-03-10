@@ -1,0 +1,17 @@
+{
+  "features": [
+    "macro__close_DX-Y.NYB__lag5",
+    "macro__WM2NS__lag2",
+    "macro__DGS10__lag1",
+    "macro__CPIAUCSL__lag2",
+    "macro__PPIACO__lag3",
+    "macro__UNRATE__lag2",
+    "macro__RSXFS__lag1",
+    "macro__WALCL__lag5",
+    "macro__INDPRO__lag1",
+    "macro__close_FX_EURUSD_daily_volatility__lag5",
+    "macro__PCEPI__lag2",
+    "macro__HOUST__lag1"
+  ],
+  "count": 12
+}
