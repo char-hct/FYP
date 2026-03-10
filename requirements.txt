@@ -1,9 +1,8 @@
-# Minimal requirements.txt for Streamlit deployment with locked versions
+# Minimal requirements.txt for Streamlit deployment with locked versions (wordcloud removed)
 streamlit==1.50.0
 pandas==2.3.3
 numpy==1.26.4
 plotly==5.19.0
 Pillow==9.2.0
-wordcloud==1.9.6
 matplotlib==3.8.4
 scikit-learn==1.5.2
