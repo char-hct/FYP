@@ -10,7 +10,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 from pathlib import Path
 import json
-from PIL import Image
 import sys
 import os
 import datetime
@@ -239,19 +238,20 @@ if selected_tab == "📊 Dashboard":
 
     if not btc_weekly.empty:
         latest_date = btc_weekly['DATE'].iloc[-1]
+    # Create two columns for price and predictions
+    price_col, pred_col = st.columns([1.2, 1.2])
+    with price_col:
         st.markdown(f"**📈 Latest Weekly Price ({latest_date.strftime('%Y-%m-%d')})**")
-    else:
-        st.markdown("**📈 Latest Weekly Price**")
-    top1, top2, top3, top4 = st.columns([1.2, 1, 1, 3.4])
-    with top1:
-        st.metric("BTC Close", f"${latest_price:,.0f}", f"{price_change:+.2f}%")
-    with top2:
-        if not btc_weekly.empty:
-            st.metric("High", f"${btc_weekly['High'].iloc[-1]:,.0f}")
-    with top3:
-        if not btc_weekly.empty:
-            st.metric("Low", f"${btc_weekly['Low'].iloc[-1]:,.0f}")
-    with top4:
+        close_col, high_col, low_col = st.columns(3)
+        with close_col:
+            st.metric("BTC Close", f"${latest_price:,.0f}", f"{price_change:+.2f}%")
+        with high_col:
+            if not btc_weekly.empty:
+                st.metric("High", f"${btc_weekly['High'].iloc[-1]:,.0f}")
+        with low_col:
+            if not btc_weekly.empty:
+                st.metric("Low", f"${btc_weekly['Low'].iloc[-1]:,.0f}")
+    with pred_col:
         # --- Build Predictions HTML (left side) ---
         pred_html = ""
         if model_preds:
@@ -317,7 +317,6 @@ if selected_tab == "📊 Dashboard":
                 "<div style='font-size:1.1em;font-weight:700;margin-bottom:4px;'>Model Performance<br>(Accuracy, AUC, F1 score)</div>"
                 + acc_html
             )
-        # --- Combine into one rectangle ---
         st.markdown(
             f"<div style='border:2.5px solid #1a73e8;border-radius:10px;padding:12px 16px;background:linear-gradient(135deg,#e8f0fe,#d2e3fc);box-shadow:0 2px 8px rgba(26,115,232,0.15);'>"
             f"<div style='display:flex;gap:24px;'>"
