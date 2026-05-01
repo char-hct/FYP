@@ -1,7 +1,9 @@
-# Minimal requirements.txt for Streamlit deployment (Pillow removed)
-streamlit==1.50.0
-pandas==2.3.3
-numpy==1.26.4
-plotly==5.20.0
-matplotlib==3.8.4
-scikit-learn==1.5.2
+# Requirements for Streamlit Cloud deployment
+streamlit>=1.37.0
+pandas>=2.0.0
+numpy>=1.24.0
+plotly>=5.18.0
+matplotlib>=3.8.0
+scikit-learn>=1.4.0
+altair>=5.0.0
+watchdog>=3.0.0

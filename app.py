@@ -36,55 +36,110 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ========== CUSTOM CSS STYLING ==========
-st.markdown('''
-<style>
-    /* ---- Global font size boost ---- */
-    html, body, [class*="css"] {
-        font-size: 18px !important;
-    }
-    .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown span {
-        font-size: 1.05rem !important;
-    }
-    .stTabs [data-baseweb="tab"] {
-        font-size: 1.1rem !important;
-    }
-    .stRadio label, .stSelectbox label, .stMultiSelect label, .stCheckbox label {
-        font-size: 1.05rem !important;
-    }
-    .stDataFrame, .stTable {
-        font-size: 1.02rem !important;
-    }
-    h1 { font-size: 2.2rem !important; }
-    h2 { font-size: 1.8rem !important; }
-    h3 { font-size: 1.5rem !important; }
-    h4 { font-size: 1.3rem !important; }
 
-    .main-header {
-        font-size: 48px;
-        font-weight: bold;
-        color: #1f77b4;
-    }
-    .sticky-header {
-        position: sticky;
-        top: 0;
-        background-color: white;
-        z-index: 999;
-        padding: 15px 0;
-        border-bottom: 2px solid #1f77b4;
-        margin: 10px 0;
-    }
-    .metric-card {
-        background-color: #f0f2f6;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 10px 0;
-    }
-    .positive { color: #2ecc71; font-weight: bold; }
-    .negative { color: #e74c3c; font-weight: bold; }
-    .neutral { color: #95a5a6; font-weight: bold; }
-</style>
-''', unsafe_allow_html=True)
+# ========== CONDITIONAL CUSTOM CSS STYLING ==========
+if 'selected_tab' not in locals():
+    selected_tab = None
+if selected_tab != "📊 Dashboard":
+    st.markdown('''
+    <style>
+        /* ---- Even larger font for all tabs except Dashboard ---- */
+        html, body, [class*="css"] {
+            font-size: 23px !important;
+        }
+        .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown span {
+            font-size: 1.32rem !important;
+        }
+        .stTabs [data-baseweb="tab"] {
+            font-size: 1.36rem !important;
+        }
+        .stRadio label, .stSelectbox label, .stMultiSelect label, .stCheckbox label {
+            font-size: 1.32rem !important;
+        }
+        .stDataFrame, .stTable {
+            font-size: 1.22rem !important;
+        }
+        h1 { font-size: 2.7rem !important; }
+        h2 { font-size: 2.0rem !important; }
+        h3 { font-size: 1.7rem !important; }
+        h4 { font-size: 1.32rem !important; }
+
+        .main-header {
+            font-size: 2.9rem;
+            font-weight: bold;
+            color: #1f77b4;
+            margin-bottom: 0.5rem;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 999;
+            padding: 15px 0;
+            border-bottom: 2px solid #1f77b4;
+            margin: 10px 0;
+        }
+        .metric-card {
+            background-color: #f0f2f6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .positive { color: #2ecc71; font-weight: bold; }
+        .negative { color: #e74c3c; font-weight: bold; }
+        .neutral { color: #95a5a6; font-weight: bold; }
+    </style>
+    ''', unsafe_allow_html=True)
+else:
+    st.markdown('''
+    <style>
+        /* ---- Compact font for Dashboard tab ---- */
+        html, body, [class*="css"] {
+            font-size: 17px !important;
+        }
+        .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown span {
+            font-size: 1.08rem !important;
+        }
+        .stTabs [data-baseweb="tab"] {
+            font-size: 1.12rem !important;
+        }
+        .stRadio label, .stSelectbox label, .stMultiSelect label, .stCheckbox label {
+            font-size: 1.08rem !important;
+        }
+        .stDataFrame, .stTable {
+            font-size: 1.04rem !important;
+        }
+        h1 { font-size: 2.1rem !important; }
+        h2 { font-size: 1.5rem !important; }
+        h3 { font-size: 1.2rem !important; }
+        h4 { font-size: 1.08rem !important; }
+
+        .main-header {
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: #1f77b4;
+            margin-bottom: 0.5rem;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 999;
+            padding: 15px 0;
+            border-bottom: 2px solid #1f77b4;
+            margin: 10px 0;
+        }
+        .metric-card {
+            background-color: #f0f2f6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .positive { color: #2ecc71; font-weight: bold; }
+        .negative { color: #e74c3c; font-weight: bold; }
+        .neutral { color: #95a5a6; font-weight: bold; }
+    </style>
+    ''', unsafe_allow_html=True)
 
 # ========== SIDEBAR ==========
 st.sidebar.title("📋 Navigation")
@@ -125,8 +180,15 @@ try:
     week_label = data.get('label', 'Latest Week')
     week_range = data.get('week_range', {})
     sentiment_info = data['raw'].get('sentiment', {})
+except FileNotFoundError as e:
+    st.error(f"⚠️ **Data Loading Error**: Required data file not found.\n\n{str(e)}\n\nPlease ensure all data files are included in the repository.")
+    st.info("**To fix**: Make sure these directories are in git:\n- `data/cleaned_v2/`\n- `data/sentiment/`\n- `data/trans/`\n- `models/`\n- `metrics/`")
+    st.stop()
 except Exception as e:
-    st.sidebar.error(f"Error loading data: {e}")
+    st.error(f"⚠️ **Error loading data**: {str(e)}")
+    import traceback
+    with st.expander("📋 Error Details"):
+        st.code(traceback.format_exc())
     st.stop()
 
 # ========== HEADER ==========
@@ -178,10 +240,10 @@ def display_model_metrics(metrics_dict, model_name, feature_importance_path=None
 if selected_tab == "📊 Dashboard":
     # Reduce default padding for a compact dashboard
     st.markdown("""<style>
-        .block-container {padding-top:1rem; padding-bottom:0rem;}
-        [data-testid="stMetricValue"] {font-size:1.7rem;}
-        [data-testid="stMetricLabel"] {font-size:1.1rem;}
-        [data-testid="stMetricDelta"] {font-size:1.05rem;}
+        .block-container {padding-top:1.2rem; padding-bottom:0.5rem;}
+        [data-testid="stMetricValue"] {font-size:1.35rem;}
+        [data-testid="stMetricLabel"] {font-size:1.02rem;}
+        [data-testid="stMetricDelta"] {font-size:1.02rem;}
     </style>""", unsafe_allow_html=True)
 
     # ---- Load all dashboard data ----
@@ -200,7 +262,7 @@ if selected_tab == "📊 Dashboard":
         "Logistic Reg.": Path("data/predictions/predictions_linear_regression.csv"),
         "Random Forest": Path("data/predictions/predictions_random_forest.csv"),
         "XGBoost": Path("data/predictions/predictions_xgboost.csv"),
-        "LSTM": Path("data/predictions/predictions_lstm.csv"),
+        "LSTM": Path("data/predictions/predictions_lstm_model3.csv"),
     }
     model_preds = {}
     for name, p in pred_files.items():
@@ -221,12 +283,6 @@ if selected_tab == "📊 Dashboard":
         with open(metrics_path, 'r') as f:
             all_metrics = json.load(f)
         lstm_metrics = all_metrics.get('models', {}).get('lstm_model3', None)
-    # Fallback: load from lstm_model3_metrics.json if not found
-    if lstm_metrics is None:
-        lstm_metrics_path = Path("metrics/lstm_model3_metrics.json")
-        if lstm_metrics_path.exists():
-            with open(lstm_metrics_path, 'r') as f:
-                lstm_metrics = json.load(f)
 
     # ===== ROW 1: Price metrics + Sentiment + Predictions (compact top bar) =====
     if not btc_weekly.empty:
@@ -294,25 +350,7 @@ if selected_tab == "📊 Dashboard":
                         f"<span>F1 {bm['f1']:.2f}</span>"
                         f"</div>"
                     )
-            # Always show LSTM metrics row, even if missing
-            if lstm_metrics:
-                ap = lstm_metrics.get('accuracy', 0) * 100
-                ac = '#2ecc71' if ap >= 60 else ('#e67e22' if ap >= 50 else '#e74c3c')
-                auc_val = lstm_metrics.get('auc', 0)
-                f1_val = lstm_metrics.get('f1', 0)
-            else:
-                ap = 0
-                ac = '#e74c3c'
-                auc_val = 0
-                f1_val = 0
-            acc_html += (
-                f"<div style='display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee;font-size:1.05em;'>"
-                f"<span><b>LSTM</b></span>"
-                f"<span style='color:{ac};font-weight:700;'>Acc {ap:.1f}%</span>"
-                f"<span>AUC {auc_val:.2f}</span>"
-                f"<span>F1 {f1_val:.2f}</span>"
-                f"</div>"
-            )
+            # Remove duplicate LSTM metrics row (already included if present in best_models)
             acc_section_html = (
                 "<div style='font-size:1.1em;font-weight:700;margin-bottom:4px;'>Model Performance<br>(Accuracy, AUC, F1 score)</div>"
                 + acc_html
@@ -351,8 +389,8 @@ if selected_tab == "📊 Dashboard":
             fig_price.update_layout(
                 height=400,
                 margin=dict(l=5, r=5, t=5, b=5),
-                xaxis=dict(title='', showgrid=False, tickfont=dict(size=12)),
-                yaxis=dict(title='USD', showgrid=True, gridcolor='rgba(128,128,128,0.15)', tickfont=dict(size=12), titlefont=dict(size=13)),
+                xaxis=dict(title='', showgrid=False, tickfont=dict(size=18), titlefont=dict(size=20)),
+                yaxis=dict(title='USD', showgrid=True, gridcolor='rgba(128,128,128,0.15)', tickfont=dict(size=18), titlefont=dict(size=20)),
                 plot_bgcolor='rgba(0,0,0,0)',
                 hovermode='x unified',
             )
@@ -377,8 +415,8 @@ if selected_tab == "📊 Dashboard":
             fig_ret.update_layout(
                 height=400,
                 margin=dict(l=5, r=5, t=5, b=5),
-                xaxis=dict(title='', showgrid=False, tickformat='%b %d', tickfont=dict(size=10)),
-                yaxis=dict(title='%', showgrid=True, gridcolor='rgba(128,128,128,0.15)', zeroline=True, zerolinecolor='gray', tickfont=dict(size=11)),
+                xaxis=dict(title='', showgrid=False, tickformat='%b %d', tickfont=dict(size=18), titlefont=dict(size=20)),
+                yaxis=dict(title='%', showgrid=True, gridcolor='rgba(128,128,128,0.15)', zeroline=True, zerolinecolor='gray', tickfont=dict(size=18), titlefont=dict(size=20)),
                 plot_bgcolor='rgba(0,0,0,0)',
             )
             st.plotly_chart(fig_ret, use_container_width=True, key="dashboard_weekly_returns")
@@ -407,10 +445,10 @@ if selected_tab == "📊 Dashboard":
                 fig_sent.update_layout(
                     height=400,
                     margin=dict(l=5, r=5, t=5, b=5),
-                    xaxis=dict(showticklabels=True, showgrid=False, tickfont=dict(size=10)),
-                    yaxis=dict(showticklabels=True, showgrid=False, tickfont=dict(size=11)),
+                    xaxis=dict(showticklabels=True, showgrid=False, tickfont=dict(size=18), titlefont=dict(size=20)),
+                    yaxis=dict(showticklabels=True, showgrid=False, tickfont=dict(size=18), titlefont=dict(size=20)),
                     plot_bgcolor='rgba(0,0,0,0)',
-                    legend=dict(orientation='h', yanchor='bottom', y=1, xanchor='center', x=0.5, font=dict(size=10)),
+                    legend=dict(orientation='h', yanchor='bottom', y=1, xanchor='center', x=0.5, font=dict(size=14)),
                 )
                 st.plotly_chart(fig_sent, use_container_width=True, key="dashboard_sentiment_trend")
 
@@ -1037,8 +1075,7 @@ elif selected_tab == "📈 Latest data":
                     'Data Date': var_data['raw_date'],
                     'Previous Value': f"{var_data['prev_value']:,.2f}" if var_data['prev_value'] else 'N/A',
                     'Change %': f"{var_data['pct_change']:+.2f}%" if var_data['prev_value'] else 'N/A',
-                    '↑↓': var_data['symbol'],
-                    'Calculation': var_data['change_desc']
+                    '↑↓': var_data['symbol']
                 })
             if btc_table_data:
                 st.dataframe(pd.DataFrame(btc_table_data), use_container_width=True)
@@ -1056,8 +1093,7 @@ elif selected_tab == "📈 Latest data":
                     'Data Date': var_data['raw_date'],
                     'Previous Value': f"{var_data['prev_value']:,.4f}" if var_data['prev_value'] else 'N/A',
                     'Change %': f"{var_data['pct_change']:+.2f}%" if var_data['prev_value'] else 'N/A',
-                    '↑↓': var_data['symbol'],
-                    'Calculation': var_data['change_desc']
+                    '↑↓': var_data['symbol']
                 })
             if macro_table_data:
                 st.dataframe(pd.DataFrame(macro_table_data), use_container_width=True)
@@ -1077,8 +1113,7 @@ elif selected_tab == "📈 Latest data":
                     'Data Date': var_data['raw_date'],
                     'Previous Value': f"{var_data['prev_value']:,.2f}" if var_data['prev_value'] else 'N/A',
                     'Change %': f"{var_data['pct_change']:+.2f}%" if var_data['prev_value'] else 'N/A',
-                    '↑↓': var_data['symbol'],
-                    'Calculation': var_data['change_desc']
+                    '↑↓': var_data['symbol']
                 })
             if more_table_data:
                 st.dataframe(pd.DataFrame(more_table_data), use_container_width=True)
@@ -1218,13 +1253,13 @@ elif selected_tab == "🔵 Logistic Regression":
     # Walk-Forward Analysis
     with st.expander("📊 Advanced: Walk-Forward Rolling Window Analysis", expanded=False):
         st.write("""
-        **What is Walk-Forward Analysis?**
+    **What is Walk-Forward Analysis?**
 
-        This analysis tests model performance across different training window sizes:
-        - Trains on windows: 52, 78, 104, 130, 156, 182 weeks
-        - Evaluates on next 51 weeks (test set)
-        - Shows how performance scales with more training data
-        """)
+    This analysis tests model performance across different training window sizes:
+    - Trains on windows: 52, 78, 104, 130, 156, 182 weeks
+    - Evaluates on next 51 weeks (test set)
+    - Shows how performance scales with more training data
+    """)
         show_walkforward = st.checkbox("📈 Show Rolling Window Plots", value=False, key="wf_lin_checkbox")  # Change key for each tab: wf_lin_checkbox, wf_rf_checkbox, wf_xgb_checkbox
         if show_walkforward:
             st.write("**Logistic Model Walk-Forward**")  # Change label for each tab: Logistic, Random Forest, XGBoost
@@ -1440,79 +1475,94 @@ elif selected_tab == "🧠 LSTM":
     - **Output**: Dense (1, sigmoid) — binary classification
     - **Loss**: Binary Crossentropy
     - **Features**: BTC + Macro + More + Sentiment
-    """)
+    """
+    )
 
+
+    import json
+    import pandas as pd
+    metrics_path = Path("metrics/latest_metrics.json")
+    lstm_metrics = {}
+    if metrics_path.exists():
+        with open(metrics_path, 'r') as f:
+            lstm_metrics = json.load(f).get("models", {})
+
+    variant_info = [
+        ("Base Model (BTC Lags Only)", "lstm_base", "other_computer/predictions/predictions_lstm_base.csv", "base"),
+        ("Model 1 (Macro Features Only)", "lstm_model1", "other_computer/predictions/predictions_lstm_model1.csv", "model1"),
+        ("Model 2 (BTC + Macro + More Market Data)", "lstm_model2", "other_computer/predictions/predictions_lstm_model2.csv", "model2"),
+        ("Model 3 (BTC + Macro + More + Sentiment)", "lstm_model3", "data/predictions/predictions_lstm_model3.csv", "model3")
+    ]
+    for title, key, pred_path_str, fig_key in variant_info:
+        st.markdown("---")
+        st.subheader(title)
+        m = lstm_metrics.get(key, {})
+        # Use new bar chart for feature importance for model2 and model3
+        if key == "lstm_model2":
+            feature_importance_path = "figure_lstm/lstm_model2_importance_bar_top20.png"
+        elif key == "lstm_model3":
+            feature_importance_path = "figure_lstm/lstm_model3_importance_bar_top20.png"
+        else:
+            feature_importance_path = f"figure_lstm/lstm_{fig_key}_feature_importance.png"
+        # Metrics
+        if m:
+            display_model_metrics(m, title,
+                feature_importance_path=feature_importance_path)
+        elif key == "lstm_model3":
+            metrics3_path = Path("metrics/lstm_model3_metrics.json")
+            if metrics3_path.exists():
+                with open(metrics3_path, 'r') as f:
+                    m3 = json.load(f)
+                display_model_metrics(m3, title,
+                    feature_importance_path=feature_importance_path)
+            else:
+                st.warning(f"{title} metrics not available.")
+        else:
+            st.warning(f"{title} metrics not available.")
     st.markdown("---")
-
-    # Model metrics
-    st.subheader("Model3 Performance (Best Accuracy)")
-    metrics = load_metrics()
-    if 'lstm_model3' in metrics.get('models', {}):
-        display_model_metrics(metrics['models']['lstm_model3'], "LSTM Model3")
-    else:
-        # Show hardcoded metrics from metadata
-        col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Accuracy", "68.6%")
-        col2.metric("AUC", "0.719")
-        col3.metric("F1 Score", "0.556")
-        col4.metric("Features", "5,186")
-
-    st.markdown("---")
-
-    # Predictions summary
-    st.subheader("📊 Test Period Predictions")
-    lstm_pred_path = Path("data/predictions/predictions_lstm.csv")
-    if lstm_pred_path.exists():
-        lstm_df = pd.read_csv(lstm_pred_path)
-        lstm_df['date'] = pd.to_datetime(lstm_df['date'])
-
-        total = len(lstm_df)
-        buys = (lstm_df['trading_signal'] == 1).sum()
-        sells = (lstm_df['trading_signal'] == -1).sum()
-        holds = (lstm_df['trading_signal'] == 0).sum()
-        correct = ((lstm_df['y_pred_binary'] == (lstm_df['y_actual'] > 0).astype(int))).sum()
-
-        col1, col2, col3, col4, col5 = st.columns(5)
-        col1.metric("Test Weeks", total)
-        col2.metric("Correct", f"{correct}/{total}")
-        col3.metric("🟢 BUY", int(buys))
-        col4.metric("🔴 SELL", int(sells))
-        col5.metric("⚪ HOLD", int(holds))
-
-        # Show predictions table
-        with st.expander("View All Predictions", expanded=False):
-            show_df = lstm_df.copy()
-            show_df['Actual Direction'] = show_df['y_actual'].apply(lambda x: '🟢 UP' if x > 0 else '🔴 DOWN')
-            show_df['Predicted'] = show_df['y_pred_binary'].apply(lambda x: '🟢 UP' if x == 1 else '🔴 DOWN')
-            show_df['Signal'] = show_df['trading_signal'].map({1.0: '🟢 BUY', -1.0: '🔴 SELL', 0.0: '⚪ HOLD'})
-            show_df['Correct'] = (show_df['y_pred_binary'] == (show_df['y_actual'] > 0).astype(int)).map({True: '✅', False: '❌'})
-            show_df['Date'] = show_df['date'].dt.strftime('%Y-%m-%d')
-            show_df['Confidence'] = show_df['confidence'].apply(lambda x: f"{x:.4f}")
-            st.dataframe(show_df[['Date', 'Actual Direction', 'Predicted', 'Confidence', 'Signal', 'Correct']], use_container_width=True)
-    else:
-        st.warning("LSTM predictions not available. Run generate_lstm_predictions.py on a computer with TensorFlow 2.16+.")
-
-    st.markdown("---")
-
-    # Generated figures section
     st.subheader("📊 Model Visuals")
     st.write("**Model Comparison Plot**")
-    fig_path = Path("/Users/charlotteho/Desktop/fyp/figure_lstm/lstm_model_comparison.png")
+    fig_path = Path("figure_lstm/lstm_model_comparison.png")
     if fig_path.exists():
         st.image(str(fig_path), use_container_width=True)
     else:
-        st.info("🔄 To be updated — LSTM Base / Model1 / Model2 metrics not yet available.")
-
-    st.write("**Confusion Matrices**")
+        st.info("Figure not yet generated. Run `python generate_figures.py --only lstm`")
+    st.write("**Confusion Matrices (All Variants)**")
     cm_cols = st.columns(4)
-    for i, (vk, vlabel) in enumerate([("base", "Base"), ("model1", "Model 1"), ("model2", "Model 2"), ("model3", "Model 3")]):
+    for i, (vk, vlabel) in enumerate([
+        ("base", "Base"),
+        ("model1", "Model 1"),
+        ("model2", "Model 2"),
+        ("model3", "Model 3")
+    ]):
         with cm_cols[i]:
             st.caption(vlabel)
-            cm_path = Path(f"/Users/charlotteho/Desktop/fyp/figure_lstm/lstm_{vk}_confusion_matrix.png")
+            cm_path = Path(f"figure_lstm/lstm_{vk}_confusion_matrix.png")
             if cm_path.exists():
                 st.image(str(cm_path), use_container_width=True)
             else:
-                st.info("🔄 To be updated")
+                st.info("Not yet generated")
+    # Walk-Forward Analysis
+    with st.expander("📊 Advanced: Walk-Forward Rolling Window Analysis", expanded=False):
+        st.write("""
+        **What is Walk-Forward Analysis?**
+
+        This analysis tests model performance across different training window sizes:
+        - Trains on windows: 52, 78, 104, 130, 156, 182 weeks
+        - Evaluates on next 51 weeks (test set)
+        - Shows how performance scales with more training data
+        """)
+        show_walkforward = st.checkbox("📈 Show Rolling Window Plots", value=False, key="wf_lstm_checkbox")
+        if show_walkforward:
+            st.write("**LSTM Model Walk-Forward**")
+            try:
+                fig_path = Path("figure_lstm/lstm_walkforward_comparison.png")
+                if fig_path.exists():
+                    st.image(str(fig_path), use_container_width=True)
+                else:
+                    st.info("Figure not yet generated")
+            except Exception:
+                st.info("Figures will be available after model training")
 
 # ========== TAB 6: MODEL COMPARISON ==========
 elif selected_tab == "🎯 Model Comparison":
@@ -1611,9 +1661,9 @@ elif selected_tab == "💵 Trading Simulation":
     def load_model_predictions():
         pred_files = {
             "Logistic Regression": "data/predictions/predictions_linear_regression.csv",
-            "Random Forest": "data/predictions/predictions_random_forest.csv",
+            "Random Forest": "data/predictions/predictions_rf_model2.csv",
             "XGBoost": "data/predictions/predictions_xgboost.csv",
-            "LSTM": "data/predictions/predictions_lstm.csv",
+            "LSTM": "data/predictions/predictions_lstm_model3.csv",
         }
 
         loaded_models = {}
@@ -1778,15 +1828,6 @@ elif selected_tab == "💵 Trading Simulation":
                     
                     # Test Period info
                     st.markdown("---")
-                    start_price = first_result.get('price_range', {}).get('start', 'N/A')
-                    end_price = first_result.get('price_range', {}).get('end', 'N/A')
-                    try:
-                        start_str = f"${float(start_price):,.0f}"
-                        end_str = f"${float(end_price):,.0f}"
-                    except (ValueError, TypeError):
-                        start_str = str(start_price)
-                        end_str = str(end_price)
-                    st.info(f"**Test Period BTC Price:** {start_str} → {end_str}")
 
             # Detailed results for selected models
             st.markdown("---")
